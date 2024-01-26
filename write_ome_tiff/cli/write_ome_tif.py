@@ -152,16 +152,3 @@ class OMETIFFMaker:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
