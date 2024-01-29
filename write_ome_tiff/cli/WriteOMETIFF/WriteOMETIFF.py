@@ -9,6 +9,9 @@ import sys
 
 import girder_client
 
+from ctk_cli import CLIArgumentParser
+
+
 sys.path.append('..')
 from write_ome_tif import OMETIFFMaker
 
@@ -29,30 +32,6 @@ def main(args):
 
     ome_tiff_maker.write_tiff()
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if __name__=='__main__':
+    main(CLIArgumentParser().parse_args())
 
