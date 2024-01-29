@@ -11,9 +11,8 @@ import girder_client
 
 from ctk_cli import CLIArgumentParser
 
-
 sys.path.append('..')
-from write_ome_tif import OMETIFFMaker
+from cli.write_ome_tif import OMETIFFMaker
 
 def main(args):
 

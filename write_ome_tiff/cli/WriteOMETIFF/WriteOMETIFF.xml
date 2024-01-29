@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executable>
+  <category>HistomicsTK</category>
+  <title>Write OME-TIFF</title>
+  <description>Write annotations in OME-TIFF format</description>
+  <version>0.1.0</version>
+  <documentation-url>https://github.com/spborder/write-ome-tiff-plugin/</documentation-url>
+  <license>MIT</license>
+  <contributor>Sam Border (UFL)</contributor>
+  <acknowledgements>This work is part of efforts in digital pathology by the Sarder Lab: UFL.</acknowledgements>
+  <parameters>
+    <label>IO</label>
+    <description>Input/output parameters.</description>
+    <image>
+      <name>input_image</name>
+      <label>Input Image</label>
+      <description>Image to generate OME-TIFF annotations for</description>
+      <channel>input</channel>
+      <index>0</index>
+    </image>
+  </parameters>
+  <parameters advanced="true">
+    <label>Girder API URL and Key</label>
+    <description>A Girder API URL and token for Girder client</description>
+    <string>
+      <name>girderApiUrl</name>
+      <longflag>api-url</longflag>
+      <label>Girder API URL</label>
+      <description>A Girder API URL (e.g., https://girder.example.com:443/api/v1)</description>
+      <default></default>
+    </string>
+    <string>
+      <name>girderToken</name>
+      <longflag>token</longflag>
+      <label>Girder API Token</label>
+      <description>A Girder token identifying a user session</description>
+      <default></default>
+    </string>
+  </parameters>
+</executable>
