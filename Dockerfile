@@ -75,7 +75,7 @@ WORKDIR $write_ome_tiff_path/write_ome_tiff/cli
 # Test our entrypoint.  If we have incompatible versions of numpy and
 # openslide, one of these will fail
 RUN python -m slicer_cli_web.cli_list_entrypoint --list_cli
-RUN python -m slicer_cli_web.cli_list_entrypoint write_ome_tiff --help
+RUN python -m slicer_cli_web.cli_list_entrypoint WriteOMETIFF --help
 
 
 ENTRYPOINT ["/bin/bash", "docker-entrypoint.sh"]
