@@ -11,7 +11,7 @@
   <parameters>
     <label>IO</label>
     <description>Input/output parameters.</description>
-    <image>
+    <image reference="_girder_id_">
       <name>input_image</name>
       <label>Input Image</label>
       <description>Image to generate OME-TIFF annotations for</description>
