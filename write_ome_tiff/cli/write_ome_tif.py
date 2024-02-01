@@ -66,7 +66,7 @@ class OMETIFFMaker:
                     el_width = int(maxx-minx)
 
                     # Scaled coordinates (making minimal polygons necessary)
-                    scaled_coords = [[i[0]-minx,i[1]-miny] for i in coords]
+                    scaled_coords = [[int(i[0]-minx),int(i[1]-miny)] for i in coords]
 
                     # Creating polygon (inputs are rows, columns or y, x so have to reverse order)
                     el_rows, el_cols = polygon(
@@ -75,11 +75,17 @@ class OMETIFFMaker:
                     )
 
                     # Label mask assigns the element index to the locations of the polygon
-                    el_poly_mask = np.zeros((el_height,el_width))
-                    el_poly_mask[el_rows,el_cols] += (el_idx+1)
+                    try:
+                        el_poly_mask = np.zeros((el_height,el_width))
+                        el_poly_mask[el_rows,el_cols] += (el_idx+1)
 
-                    # Adding element mask to full layer mask
-                    ann_mask[miny:maxy,minx:maxx] += el_poly_mask
+                        # Adding element mask to full layer mask
+                        ann_mask[miny:maxy,minx:maxx] += el_poly_mask
+                    except IndexError:
+                        print(f'Index error on element: {el_idx}')
+                        print(np.shape(el_poly_mask))
+                        print(el_rows)
+                        print(el_cols)
                 
                 else:
                     print(f'Skipping annotation: {ann_idx}')
