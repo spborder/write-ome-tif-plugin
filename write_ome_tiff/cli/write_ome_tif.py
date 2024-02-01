@@ -39,14 +39,14 @@ class OMETIFFMaker:
             annotations = [annotations]
 
         # Iterating through annotation layers
-        for ann_idx,ann in annotations:
+        for ann_idx,ann in enumerate(annotations):
             # Creating new mask that is the same size as the WSI (yikes)
             ann_mask = np.zeros((self.image_Y,self.image_X))
 
             self.annotation_names.append(ann['annotation']['name'])
 
             # Iterating through elements in current annotation layer
-            for el_idx, el in ann['annotation']['elements']:
+            for el_idx, el in enumerate(ann['annotation']['elements']):
 
                 if el['type']=='polyline':
                     # Pulling out points (dropping z-axis)
@@ -93,6 +93,15 @@ class OMETIFFMaker:
             self.all_frames = np.concatenate((self.image[None,:,:,:],np.array(self.annotation_masks)[None,:,:,None]))
         else:
             self.all_frames = self.annotation_masks
+
+    def get_image_data(self, image_metadata:dict, image_item_info:dict):
+
+        self.image_X = image_metadata['sizeX']
+        self.image_Y = image_metadata['sizeY']
+
+        self.image_name = image_item_info['name']
+        self.image_path = f'/{self.image_name}'
+
 
     def read_image(self,image_path:str):
 
@@ -149,6 +158,8 @@ class OMETIFFMaker:
 
         with open(xml_save_path,'wt+') as fh:
             fh.write(xml_data)
+
+        return save_path, xml_save_path
 
 
 
