@@ -49,8 +49,8 @@ class OMETIFFMaker:
             for el_idx, el in enumerate(ann['annotation']['elements']):
 
                 if el['type']=='polyline':
-                    # Pulling out points (dropping z-axis)
-                    coords = [[i[0],i[1]] for i in el['points']]
+                    # Pulling out points (dropping z-axis, keeping in X,Y order)
+                    coords = [[int(i[0]),int(i[1])] for i in el['points']]
 
                     # Points are stored in X, Y, Z order in large-image annotations
                     x_coords = [i[0] for i in coords]
@@ -61,9 +61,11 @@ class OMETIFFMaker:
                     miny = int(np.min(y_coords))
                     maxx = int(np.max(x_coords))
                     maxy = int(np.max(y_coords))
+                    print(f'minx: {minx}, miny: {miny}, maxx: {maxx}, maxy: {maxy}')
 
-                    el_height = int(maxy-miny)
-                    el_width = int(maxx-minx)
+                    el_height = int(maxy-miny)+1
+                    el_width = int(maxx-minx)+1
+                    print(f'el_height: {el_height}, el_width: {el_width}')
 
                     # Scaled coordinates (making minimal polygons necessary)
                     scaled_coords = [[int(i[0]-minx),int(i[1]-miny)] for i in coords]
@@ -81,6 +83,7 @@ class OMETIFFMaker:
 
                         # Adding element mask to full layer mask
                         ann_mask[miny:maxy,minx:maxx] += el_poly_mask
+
                     except IndexError:
                         print(f'Index error on element: {el_idx}')
                         print(np.shape(el_poly_mask))
