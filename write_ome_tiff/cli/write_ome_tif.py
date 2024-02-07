@@ -63,6 +63,7 @@ class OMETIFFMaker:
                     maxy = int(np.max(y_coords))
                     print(f'minx: {minx}, miny: {miny}, maxx: {maxx}, maxy: {maxy}')
 
+                    # Height and width here have to add 1 so that they are the number of available indices and not the range of the indices.
                     el_height = int(maxy-miny)+1
                     el_width = int(maxx-minx)+1
                     print(f'el_height: {el_height}, el_width: {el_width}')
