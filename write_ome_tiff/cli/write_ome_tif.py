@@ -61,12 +61,12 @@ class OMETIFFMaker:
                     miny = int(np.min(y_coords))
                     maxx = int(np.max(x_coords))
                     maxy = int(np.max(y_coords))
-                    print(f'minx: {minx}, miny: {miny}, maxx: {maxx}, maxy: {maxy}')
+                    #print(f'minx: {minx}, miny: {miny}, maxx: {maxx}, maxy: {maxy}')
 
                     # Height and width here have to add 1 so that they are the number of available indices and not the range of the indices.
                     el_height = int(maxy-miny)+1
                     el_width = int(maxx-minx)+1
-                    print(f'el_height: {el_height}, el_width: {el_width}')
+                    #print(f'el_height: {el_height}, el_width: {el_width}')
 
                     # Scaled coordinates (making minimal polygons necessary)
                     scaled_coords = [[int(i[0]-minx),int(i[1]-miny)] for i in coords]
@@ -83,7 +83,7 @@ class OMETIFFMaker:
                         el_poly_mask[el_rows,el_cols] += (el_idx+1)
 
                         # Adding element mask to full layer mask
-                        ann_mask[miny:maxy,minx:maxx] += el_poly_mask
+                        ann_mask[miny:maxy+1,minx:maxx+1] += el_poly_mask
 
                     except IndexError:
                         print(f'Index error on element: {el_idx}')
@@ -111,7 +111,6 @@ class OMETIFFMaker:
 
         self.image_name = image_item_info['name']
         self.image_path = f'/{self.image_name}'
-
 
     def read_image(self,image_path:str):
 
@@ -147,7 +146,7 @@ class OMETIFFMaker:
         if save_path is None:
 
             start_ext = self.image_name.split('.')[-1]
-            save_path = self.image_path.replace(self.image_name.replace(start_ext,'.ome.tiff'))
+            save_path = self.image_path.replace(self.image_name,self.image_name.replace(start_ext,'ome.tiff'))
         
         tifffile.imwrite(
             save_path,
